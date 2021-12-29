@@ -188,3 +188,126 @@ function pyramid() {
 
 let button6 = document.getElementById('example6');
 button6.addEventListener('click', pyramid);
+
+
+
+//===========ДОМАШНЕЕ ЗАДАНИЕ №4=============
+//  -----===-----Пример 1.1.-----=====-----
+// Сделайте в стиле es5, а затем в стиле es6 
+// (по аналогии из дополнительных видео -> 3 примеры наследования -> типы на es5 и es6),
+// конструктор Product, который принимает параметры name и price, сохраните их как
+// свойства объекта. Также объекты типа Product должны иметь метод make25PercentDiscount,
+// который будет уменьшать цену в объекте на 25%. Имейте в виду, что метод make25PercentDiscount
+// не должен быть внутри функции-конструктора, и также не нужно создавать отдельный объект-прототип (как объект transport в уроке).
+//es5 
+function example411a () {
+   function ProductES5 (nameES5, priceES5) {
+      this.nameES5 = nameES5;
+      this.priceES5 = priceES5;
+   }
+   ProductES5.prototype.make25PercentDiscount = function() {
+      console.log(`Первоначальная цена "${this.nameES5}" = ${this.priceES5}`);
+      this.priceES5 = this.priceES5 - this.priceES5 * (25 / 100);
+      console.log(`Цена "${this.nameES5}" после 25% скидки  = ${this.priceES5}`);
+   };
+   let prod411a = new ProductES5('товар по ес5',1000);
+   prod411a.make25PercentDiscount();
+}
+
+//es6 
+function example411b () {
+   class ProductES6 {
+         constructor (nameES6, priceES6) {
+         this.nameES6 = nameES6;
+         this.priceES6 = priceES6;
+      }
+      make25PercentDiscount() {
+         console.log(`Первоначальная цена "${this.nameES6}" = ${this.priceES6}`);
+         this.priceES6 = this.priceES6 - this.priceES6 * (25 / 100);
+         console.log(`Цена "${this.nameES6}" после 25% скидки  = ${this.priceES6}`);
+      };
+   }
+      let prod411b = new ProductES6('товар по ес6',2000);
+      prod411b.make25PercentDiscount();
+}
+
+let button411a = document.getElementById('example411a');
+button411a.addEventListener('click', example411a);
+
+let button411b = document.getElementById('example411b');
+button411b.addEventListener('click', example411b);
+
+//  -----===-----Пример 1.2.-----=====-----
+// Сделайте в стиле es5, а затем в стиле es6 (по 
+//    аналогии из дополнительных видео -> 3 примеры наследования -> механика наследования), 
+//    а) конструктор Post, который принимает параметры author, text, date и сохраняет
+//    их как свойства объекта. Объекты типа Post должны иметь метод edit, который будет 
+//    принимать текст и записывать его в свойство text объекта.
+//    б) конструктор AttachedPost, который принимает параметры author, text, date.
+//    Проинициализируйте эти свойства с помощью конструктора Post, чтобы не 
+//    дублировать код. Также в конструкторе AttachedPost должно создаваться свойство
+//    highlighted со значением false. Унаследуйте в объектах типа AttachedPost методы из Post.
+//    Объекты типа AttachedPost должны иметь метод makeTextHighlighted,
+//    который будет назначать свойству highlighted значение true.
+
+//es5 
+function example412a () {
+   function Post412a(author412a, text412a, date412a) {
+      this.author412a = author412a;
+      this.text412a = text412a;
+      this.date412a = date412a;
+   }
+   Post412a.prototype.edit = function() {
+      this.text412a = this.text412a;
+   };
+   function AttachedPost412a(author412a, text412a, date412a) {
+      Post412a.call(this, author412a, text412a, date412a);
+      this.highlighted = false;
+   }
+   AttachedPost412a.prototype = Object.create(Post412a.prototype); //унаследовали методы
+   AttachedPost412a.prototype.constructor = AttachedPost412a;//унаследовали методы
+   AttachedPost412a.prototype.makeTextHighlighted = function() {
+      this.highlighted = true;
+   };
+   let first412a = new AttachedPost412a('john__es5', 'text2__es5','12.12.2222__es5');
+   let second412a = new AttachedPost412a('Вася__es5', 'был__es5','01.01.0001__es5');
+   second412a.edit();
+   second412a.makeTextHighlighted();
+   console.log(first412a);
+   console.log(second412a);
+}
+
+//es6
+function example412b () {
+   class Post412b {
+      constructor(author412b, text412b, date412b) {
+         this.author412b = author412b;
+         this.text412b = text412b;
+         this.date412b = date412b;
+      }
+      edit() {
+         this.text412b = this.text412b;
+      }
+   }  
+   class AttachedPost412b extends Post412b {
+         constructor(author412b, text412b, date412b) {
+         super(author412b, text412b, date412b);
+         this.highlighted = false;
+      }
+         makeTextHighlighted() {
+         this.highlighted = true;
+      }
+   }
+   let first412b = new AttachedPost412b('john__es6', 'text2__es6','12.12.2222__es6');
+   let second412b = new AttachedPost412b('Вася__es6', 'был__es6','01.01.0001__es6');
+   second412b.edit();
+   second412b.makeTextHighlighted();
+   console.log(first412b);
+   console.log(second412b);
+}
+
+let button412a = document.getElementById('example412a');
+button412a.addEventListener('click', example412a);
+
+let button412b = document.getElementById('example412b');
+button412b.addEventListener('click', example412b);
